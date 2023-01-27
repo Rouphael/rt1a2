@@ -256,6 +256,10 @@ Open a terminal and type
 
 Now you have Gazebo simuulation with a robot and walls, RViz with the robot model and the laser data, and three terminals oppened.
 
+![gazebo](https://github.com/Rouphael/rt1a2/blob/main/pic/Gazebo.png)
+
+![rviz](https://github.com/Rouphael/rt1a2/blob/main/pic/RViz.png)
+
 **********************
 **********************
 **********************
@@ -264,21 +268,21 @@ Now you have Gazebo simuulation with a robot and walls, RViz with the robot mode
 **In this terminal you can choose to set a target point or to cancel it.**
  If you want to set a target you can enter 1.
 
-# Picture start
+![t1](https://github.com/Rouphael/rt1a2/blob/main/pic/a_target_status%20start.png)
 
  Then you will be asked to enter the x and y coordinates of the target point.
 
-# Picture 1
+![t2](https://github.com/Rouphael/rt1a2/blob/main/pic/a_taget_status%20target.png)
 
 
  If you want to cancel the target you can enter 2.
 
-# Picture 2
+![t3](pic/a_target_status%20cancel.png)
 
 ## Terminal B.
 **This terminal will show the number of goals reached and the number of goals cancelled when the service goal_status is called.**
 
-# Picture start
+![b1](pic/b_goal_status%20start.png)
 
 For calling goal_status service open a terminal and type
 ```bash
