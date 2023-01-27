@@ -15,10 +15,10 @@ Università di Genova/MSc in Robotics Engineering/Research Track 1/2nd Assignmen
 **********************
 
 # 1. Introduction
-## This package consist of three nodes working along with the package [assignment_2_2022](https://github.com/CarmineD8/assignment_2_2022) that provides an implementation of an action server that moves a robot in the environment by implementing the bug0 algorithm. The three nodes are:
-### 1. a_target_publisher : This node implements an action client, allowing the user to set a target (x, y) or to cancel it. The node also publishes the robot position and velocity as a custom message (x,y, vel_x, vel_z) by subscribing to the odometry topic (/odom).
-### 2. b_goal_status : This node is a service node that, when called, prints the number of goals that have been reached and and the number of goals that have been cancelled.
-### 3. c_robot_subscriber : This node subscribes to the custom message published by the a_target_publisher node and calculates the distance between the robot and the target and the average speed of the robot. the node also prints the distance and the average speed on the terminal.
+ This package consist of three nodes working along with the package [assignment_2_2022](https://github.com/CarmineD8/assignment_2_2022) that provides an implementation of an action server that moves a robot in the environment by implementing the bug0 algorithm. The three nodes are:
+ 1. a_target_publisher : This node implements an action client, allowing the user to set a target (x, y) or to cancel it. The node also publishes the robot position and velocity as a custom message (x,y, vel_x, vel_z) by subscribing to the odometry topic (/odom).
+ 2. b_goal_status : This node is a service node that, when called, prints the number of goals that have been reached and and the number of goals that have been cancelled.
+ 3. c_robot_subscriber : This node subscribes to the custom message published by the a_target_publisher node and calculates the distance between the robot and the target and the average speed of the robot. the node also prints the distance and the average speed on the terminal.
 
 **********************
 **********************
@@ -26,9 +26,10 @@ Università di Genova/MSc in Robotics Engineering/Research Track 1/2nd Assignmen
 
 # 2. Installation
 
-# 2.1 Guide for starter's (Ubuntu22 os installed)
-### If you are new to ROS, you can follow the instruction below to install ROS,Gazebo and other dipendencies and create a workspace and use this package. 
-### If you have already done so, you can skip to the next section.
+## 2.1 Guide for starter's (Ubuntu22 os installed)
+ If you are new to ROS, you can follow the instruction below to install ROS,Gazebo and other dipendencies and create a workspace and use this package.
+
+ **If you have already done so, you can skip to the next section.**
 
 ## 2.1.1 Preliminarly install gazebo
 ```bash
@@ -208,7 +209,7 @@ You should have now a full desktop ROS installation in your Ubuntu22 OS!
 
 **********************
 # 2.2 Guide with ROS and dependencies installed
-### Those who already have ROS and dependencies installed can skip the first part of the guide and start from here.
+**Those who already have ROS and dependencies installed can skip the first part of the guide and start from here.**
 
 ## 2.2.1 Install the package
 Go to the src folder of your workspace
@@ -236,13 +237,13 @@ Build any packages located in ~/catkin_ws/src.
 **********************
 **********************
 # 3. Running the package
-### You can easily run the package by launching the rt1a2.launch file.
+**You can easily run the package by launching the rt1a2.launch file.**
 
 Open a terminal and type
 ```bash
     roslaunch rt1a2 rt1a2.launch
 ```
-### This will do the following:
+**This will do the following:**
 * Launch assignment1.launch placed in the assignment_2_2022 package
   * Launch sim_w1.launch 
   * Set the parameters for the robot
@@ -260,25 +261,24 @@ Now you have Gazebo simuulation with a robot and walls, RViz with the robot mode
 **********************
 # 4. Oppened terminals
 ## Terminal A. 
-### In this terminal you can choose to set a target point or to cancel it.
-If you want to set a target you can enter 1.
+**In this terminal you can choose to set a target point or to cancel it.**
+ If you want to set a target you can enter 1.
 
 # Picture start
 
-Then you will be asked to enter the x and y coordinates of the target point.
+ Then you will be asked to enter the x and y coordinates of the target point.
 
 # Picture 1
 
 
-If you want to cancel the target you can enter 2.
+ If you want to cancel the target you can enter 2.
 
 # Picture 2
 
 ## Terminal B.
-### This terminal will show the number of goals reached and the number of goals cancelled when the service goal_status is called.
+**This terminal will show the number of goals reached and the number of goals cancelled when the service goal_status is called.**
 
 # Picture start
-
 
 For calling goal_status service open a terminal and type
 ```bash
@@ -289,7 +289,7 @@ For calling goal_status service open a terminal and type
 
 
 ## Terminal C.
-### This terminal will show robot's distance from the target point and the average speed of the robot with an update rate of publish_speed in Hz.
+**This terminal will show robot's distance from the target point and the average speed of the robot with an update rate of publish_speed in Hz.**
 
 # Picture start
 
@@ -307,8 +307,64 @@ or by oppening a terminal and typing
 **********************
 # 4. Node description
 ## 4.1 a_target_status
-### This node implements an action client, allowing the user to set a target (x, y) or to cancel it.
+**This node implements an action client, allowing the user to set a target (x, y) or to cancel it.**
+**The node also publishes the robot position and velocity as a custom message (x,y, vel_x, vel_z) by relying on the values published on the topic /odom.**
 
+This script is a python program that utilizes the ROS (Robot Operating System) framework to perform specific tasks. The script starts by importing necessary libraries and modules such as rospy, actionlib, and custom message types.
 
+The script contains several functions that perform different tasks:
 
-### The node also publishes the robot position and velocity as a custom message (x,y, vel_x, vel_z) by relying on the values published on the topic /odom.
+*    **callback(data)** - This function is a subscriber callback that listens to the '/odom' topic and pulls data from it. The data is then republished as a custom message, named 'odom_custom', using a publisher object. The custom message is defined in the 'msg' folder of the package 'rta1a2' (file: 'custom_odom.msg'). The function takes in one parameter 'data' which is of type Odometry, and it does not return anything.
+
+*   **set_target()** - This function is an action client that sends user-inputted target (x,y) coordinates to an action server. The function prompts the user to enter the target x and y coordinates and converts them to integers. It then creates a PoseStamped object, fills the goal x and y fields with the target x and y, and creates a PlanningGoal object. The function then sends the goal to the server, prints a message to the user that the goal was sent, and waits for 2 seconds before calling the 'menu()' function again to display the menu options.
+
+*    **cancel_target()** - This function is also an action client that sends a cancel request to the action server. It simply calls the 'client.cancel_goal()' function and prints a message to the user that the goal was canceled. It then waits for 2 seconds before calling the 'menu()' function again to display the menu options.
+
+*    **error()** - This function is called when the user input is not acceptable. It simply prints an error message to the user, waits for 2 seconds, and calls the 'menu()' function again to display the menu options.
+
+*    **menu()** - This function displays the menu options to the user, which are to set a target or to cancel the target. The user can enter '1' to call the 'set_target()' function, '2' to call the 'cancel_target()' function, or any other input to call the 'error()' function. The function also clears the terminal before displaying the menu options.
+  
+In summary, this script is a ROS node that listens to the '/odom' topic, republishes the data as a custom message, and allows the user to set or cancel a target using an action client. The script also has error handling and menu options to guide the user's interactions.
+
+## 4.2 b_goal_status
+**This node is a service node that, when called , prints the number of goals reached and cancelled.**
+
+This script is a ROS (Robot Operating System) node written in Python that serves as a service node. It listens to a topic called /reaching_goal/result and tracks the number of goals that have been reached and the number of goals that have been canceled. When the service is called, it prints the current number of goals reached and canceled to the console.
+
+The script begins by importing the necessary modules, including rospy, a module specific to ROS that allows the node to interact with the ROS environment. It also imports a custom message called assignment_2_2022.msg, as well as the standard os and sys modules.
+
+The script then defines several global variables: Number_goals_reached, Number_goals_canceled, and seq. The first two variables are used to keep track of the number of goals that have been reached and canceled, respectively. The seq variable is used to keep track of the number of times the service has been called.
+
+* **service_callback(req)** - This callback function is defined for the service. This function is called whenever the service is called and it prints the current number of goals reached and canceled, as well as the current sequence number. It also returns an empty response.
+
+* **subscriber_callback(data)** - This callback function is defined for the subscriber to /reaching_goal/. This function is called whenever a message is received on the /reaching_goal/result topic. It checks the status of the message, and if the status is 2 (canceled) it increments the Number_goals_canceled variable, and if the status is 3 (reached) it increments the Number_goals_reached variable.
+
+* **menu(start)** - The function named menu is defined, which is used to print a menu to the console with information about the node's function. This function is called only once when the script is first run.
+
+Finally, the script's __main__ function is executed. This function initializes the node, creates a subscriber and a service server, and then enters a loop to keep the node running. If the node is interrupted, the script will print an error message to the user.
+
+The main function also calls the menu function for printing the menu only once, it initializes the node with name "b_goal_status" , it creates a subscriber to the topic "/reaching_goal/result" and it creates a service server named "goal_status". And it's doing a spin() to keep the node running.
+
+## 4.3 c_robot_subscriber
+**This node subscribes to the robot position and velocity (using the custom message odom_custom) and prints the distance of the robot from the target and the robot average speed. 
+You can change publish_speed in rt1a2.launch to set how fast the node publishes the information.**
+
+This script is a ROS (Robot Operating System) node written in Python that subscribes to the robot position and velocity (using the custom message) and prints the distance of the robot from the target and the robot average speed.
+
+The script starts by importing the necessary libraries and modules: math, rospy, os, and sys.
+
+Then it defines the following global variables:
+
+*    average_speed: the average speed of the robot, initialized to 0
+*    speed_data: a list of the last 10 robot speeds, initialized to 0 for all elements
+*    goal_distance: the distance of the robot from the target, initialized to 6
+*    start: a variable used to print the script's purpose only once, initialized to 1
+  
+The script then defines the following functions:
+
+* **callback_subscriber(data)** -  callback function for the subscriber. It prints the distance of the robot from the target and the robot average speed. This function is called when a message is received. The function uses the pythagorean theorem to calculate the distance between the robot and the target using the robot's x and y position and the target's x and y position. It also calculates the robot's speed using the pythagorean theorem on the robot's x and y velocity. It then updates the list of the last 10 robot speeds and calculates the average speed of the robot.
+* **menu(start)** -  prints the script's purpose, the distance of the robot from the target and the robot average speed. This function is called repeatedly in the main loop.
+
+* **The if __name__ == "__main__"** -  block initializes the node, sets the rate at which the node publishes the information using the parameter /publish_speed from the launch file, initializes the subscriber to the topic odom_custom, and calls the menu() function in a loop until the node is shutdown.
+
+In case of an interruption, the script will print an error message to the user.
